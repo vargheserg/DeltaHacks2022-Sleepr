@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sleepr/constants.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Calendar extends StatefulWidget  {
@@ -18,27 +19,26 @@ class _Calendar extends State<Calendar> {
       margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(6),
-        gradient: const LinearGradient(colors: [Colors.black,Colors.black]), 
+        color: calendarBackground,
+        borderRadius: BorderRadius.circular(10),
       ),
       child: TableCalendar(
         calendarFormat: format,
         headerStyle: const HeaderStyle(
           leftChevronIcon: Icon(
             Icons.chevron_left,
-            color: Color(0xFF5C577C),
+            color: calendarChevron,
             size: 28,
           ),
           rightChevronIcon: Icon(
             Icons.chevron_right,
-            color: Color(0xFF5C577C),
+            color: calendarChevron,
             size: 28,
           ),
         ),
         focusedDay: DateTime.now(), 
-        firstDay: DateTime(1990), 
-        lastDay: DateTime(2050),
+        firstDay: DateTime(2022), 
+        lastDay: DateTime(2023),
         onFormatChanged: (CalendarFormat _format) {
           setState(() {
             format = _format;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sleepr/calendar.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:sleepr/constants.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -23,12 +24,12 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.grey,
-        primaryColor: Colors.black,
-        brightness: Brightness.dark,
-        accentColor: Colors.white,
-        accentIconTheme: IconThemeData(color: Colors.black),
-        dividerColor: Colors.black12,
+        primarySwatch: primarySwatch,
+        primaryColor: primaryColor,
+        brightness:brightness,
+        accentColor: accentColor,
+        accentIconTheme: accentIconTheme,
+        dividerColor: dividerColor,
       ),
       home: const MyHomePage(title: 'Sleepr'),
     );
@@ -54,14 +55,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   CalendarFormat format = CalendarFormat.month;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +67,8 @@ class _MyHomePageState extends State<MyHomePage> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Color(0xFF5C577C),
-                Color(0xFF282736),
+                topBackgroundGradient,
+                botBackgroundGradient,
               ],
             ),
           ),
@@ -82,35 +76,16 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Center(
               child: Column( 
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Padding(
+                children: const <Widget>[
+                  Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Calendar()
-                  ),
-                  Container(
-                    color: Colors.black,
-                    margin: const EdgeInsets.only(left: 18.0, right: 18.0, top: 20),
-                    padding: const EdgeInsets.all(10.0),
-                    child: const ListTile(
-                      title: Center(child: Text('You should be sleeping at this time:')),
-                      subtitle:  Center(child: Text('9:30 PM')),
-                      tileColor: Colors.black,
-                    ),
-                  ),
-                  Text(
-                    '$_counter',
-                    style: Theme.of(context).textTheme.headline4,
                   ),
                 ],
               ),
             ),
           ),
         ),
-      floatingActionButton: FloatingActionButton(
-      onPressed: _incrementCounter,
-      tooltip: 'Increment',
-      child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
