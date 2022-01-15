@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+// import 'package:sleepr/calendar.dart';
+import 'package:table_calendar/table_calendar.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -54,6 +55,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  CalendarFormat format = CalendarFormat.month;
 
   void _incrementCounter() {
     setState(() {
@@ -102,6 +104,16 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            new TableCalendar(
+              focusedDay: DateTime.now(), 
+              firstDay: DateTime(1990), 
+              lastDay: DateTime(2050),
+              onFormatChanged: (CalendarFormat _format) {
+                setState(() {
+                  format = _format;
+                });
+              },
+            ),
             const ListTile(
               title: Text('You should be sleeping at this time:'),
               subtitle: Text('9:30 PM'),
