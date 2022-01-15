@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sleepr/calendar.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:sleepr/setting.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -84,9 +85,13 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        onPressed: () {Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const SettingsPage()),
+          );
+        },
+        tooltip: 'Update preferences',
+        child: const Icon(Icons.settings),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
