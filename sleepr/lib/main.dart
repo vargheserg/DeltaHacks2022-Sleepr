@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sleepr/calendar.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:sleepr/setting.dart';
+import 'package:sleepr/settingstate.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -76,10 +76,6 @@ class _MyHomePageState extends State<MyHomePage> {
               title: Text('You should be sleeping at this time:'),
               subtitle: Text('9:30 PM'),
               tileColor: Colors.grey,
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
             ),
           ],
         ),
