@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:sleepr/calendar.dart';
+import 'package:sleepr/calendar.dart';
 import 'package:table_calendar/table_calendar.dart';
 void main() {
   runApp(const MyApp());
@@ -70,16 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            new TableCalendar(
-              focusedDay: DateTime.now(), 
-              firstDay: DateTime(1990), 
-              lastDay: DateTime(2050),
-              onFormatChanged: (CalendarFormat _format) {
-                setState(() {
-                  format = _format;
-                });
-              },
-            ),
+            const Calendar(),
             const ListTile(
               title: Text('You should be sleeping at this time:'),
               subtitle: Text('9:30 PM'),
