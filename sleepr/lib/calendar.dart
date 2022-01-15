@@ -14,7 +14,7 @@ class _Calendar extends State<Calendar> {
   CalendarFormat format = CalendarFormat.month;
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TableCalendar(
