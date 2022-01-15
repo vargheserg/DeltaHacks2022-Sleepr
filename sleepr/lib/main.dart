@@ -102,8 +102,10 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You should be sleeping at this time:',
+            const ListTile(
+              title: Text('You should be sleeping at this time:'),
+              subtitle: Text('9:30 PM'),
+              tileColor: Colors.grey,
             ),
             Text(
               '$_counter',
