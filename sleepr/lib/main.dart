@@ -66,27 +66,50 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Calendar(),
-            const ListTile(
-              title: Text('You should be sleeping at this time:'),
-              subtitle: Text('9:30 PM'),
-              tileColor: Colors.grey,
+      body: 
+        Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFF5C577C),
+                Color(0xFF282736),
+              ],
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+          ),
+          child: Padding(padding: const EdgeInsets.all(12.0),
+            child: Center(
+              child: Column( 
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Calendar()
+                  ),
+                  Container(
+                    color: Colors.black,
+                    margin: const EdgeInsets.only(left: 18.0, right: 18.0, top: 20),
+                    padding: const EdgeInsets.all(10.0),
+                    child: const ListTile(
+                      title: Center(child: Text('You should be sleeping at this time:')),
+                      subtitle:  Center(child: Text('9:30 PM')),
+                      tileColor: Colors.black,
+                    ),
+                  ),
+                  Text(
+                    '$_counter',
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
+                ],
+              ),
             ),
-          ],
+          ),
         ),
-      ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      onPressed: _incrementCounter,
+      tooltip: 'Increment',
+      child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
