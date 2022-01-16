@@ -9,6 +9,7 @@ import 'package:sleepr/settingstate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'globals.dart';
 import 'package:sleepr/onboarding.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -61,12 +62,10 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage>
-    with TickerProviderStateMixin {
+class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   late TabController _tabController;
   CalendarFormat format = CalendarFormat.month;
   bool _isloading = false;
-
 
   @override
   void initState() {
@@ -74,6 +73,7 @@ class _MyHomePageState extends State<MyHomePage>
 
     dataLoadFunction();
   }
+
   dataLoadFunction() async {
     setState(() {
       _isloading = true;
@@ -112,18 +112,15 @@ class _MyHomePageState extends State<MyHomePage>
       _isloading = false;
     });
 
-    if(newUser){
+    if (newUser) {
       Navigator.push(
         context,
         CupertinoPageRoute(builder: (context) => const Onboarding()),
       );
-
     }
-
   }
 
   loadMainScreen() {
-
     return SingleChildScrollView(
       child: Container(
         decoration: const BoxDecoration(
@@ -143,50 +140,59 @@ class _MyHomePageState extends State<MyHomePage>
               child: Center(
                 child: Expanded(
                     child: SizedBox(
-                      height: MediaQuery.of(context).size.height - 40,
-                      child: TabBarView(
-                        controller: _tabController,
+                  height: MediaQuery.of(context).size.height - 40,
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: <Widget>[
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                                child: Image.asset('assets/images/Logo01.png',
-                                    scale: 1.1),
-                              ),
-                              const Calendar(),
-                              RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                  BorderRadius.circular(cardBorderRadius),
-                                  side: const BorderSide(
-                                    color: calendarLightText,
-                                    width: borderWidth,
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                            child: Image.asset('assets/images/Logo01.png',
+                                scale: 1.1),
+                          ),
+                          const Calendar(),
+                          Padding(
+                              padding: EdgeInsets.fromLTRB(20.0, 0, 20, 12),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: cardBackground, // background
+                                  onPrimary: calendarLightText,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(cardBorderRadius),
+                                    side: const BorderSide(
+                                      color: calendarLightText,
+                                      width: borderWidth,
+                                    ),
+                                  ), // foreground
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                        builder: (context) =>
+                                            const SettingsPage()),
+                                  );
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 40,
+                                  child: Center(
+                                    child: Text('Settings'),
                                   ),
                                 ),
-                                onPressed: () {Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(builder: (context) => const SettingsPage()),
-                                );
-
-                                },
-                                padding:
-                                const EdgeInsets.fromLTRB(155, 10, 155, 10),
-                                color: cardBackground,
-                                textColor: calendarLightText,
-                                child: const Text('Settings',
-                                    style: TextStyle(fontSize: 15)),
-                              ),
-                            ],
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.fromLTRB(12.0, 0, 12, 12),
-                            child: Alarm(),
-                          )
+                              )),
                         ],
                       ),
-                    )),
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(12.0, 0, 12, 12),
+                        child: Alarm(),
+                      )
+                    ],
+                  ),
+                )),
               ),
             ),
             TabPageSelector(
@@ -201,14 +207,16 @@ class _MyHomePageState extends State<MyHomePage>
   }
 
   splashScreen() {
-    return Center(child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        const Image(
-        image: NetworkImage("https://cdn.discordapp.com/attachments/432737375119081482/932063650011836427/Logo01.png"),
-        ),
-      ],
-    ),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const Image(
+            image: NetworkImage(
+                "https://cdn.discordapp.com/attachments/432737375119081482/932063650011836427/Logo01.png"),
+          ),
+        ],
+      ),
     );
   }
 
@@ -220,4 +228,3 @@ class _MyHomePageState extends State<MyHomePage>
     );
   }
 }
-
