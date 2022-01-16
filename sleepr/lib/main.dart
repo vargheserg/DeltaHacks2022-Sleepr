@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sleepr/calendar.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:sleepr/constants.dart';
-
+import 'package:sleepr/settingstate.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'globals.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -59,18 +62,62 @@ class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   CalendarFormat format = CalendarFormat.month;
+  bool _isloading = false;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
+    dataLoadFunction();
+  }
+  dataLoadFunction() async {
+    setState(() {
+      _isloading = true;
+    });
+    //await Future.delayed(Duration(seconds: 3));
+
+    // initialize everything you need asynchronously here
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? a = prefs.getInt('hoursOfSleep');
+    int? b = prefs.getInt('wakeuphour');
+    int? c = prefs.getInt('wakeupminute');
+    List<String>? d = prefs.getStringList('calendar');
+    int? e = prefs.getInt('numEntries');
+    if (a != null) {
+      hoursOfSleep = a;
+    }
+    if (b != null && c != null) {
+      wakeupTime = TimeOfDay(hour: b, minute: c);
+    }
+    if (e != null) {
+      numEntries = e;
+    }
+    if (d != null) {
+      toCalendar(d);
+    }
+    // done initializing
+    setState(() {
+      _isloading = false;
+    });
+  }
+
+  splashScreen() {
+    return Center(child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        const Image(
+        image: NetworkImage("https://cdn.discordapp.com/attachments/432737375119081482/932063650011836427/Logo01.png"),
+        ),
+      ],
+    ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(
+      body: _isloading ? splashScreen() : SingleChildScrollView(
         child: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -142,7 +189,12 @@ class _MyHomePageState extends State<MyHomePage>
                                   width: borderWidth,
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: () {Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const SettingsPage()),
+                              );
+
+                              },
                               padding:
                                   const EdgeInsets.fromLTRB(155, 10, 155, 10),
                               color: cardBackground,
