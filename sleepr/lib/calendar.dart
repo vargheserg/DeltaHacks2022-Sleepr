@@ -1,7 +1,11 @@
 // ignore_for_file: prefer_const_constructors
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:sleepr/constants.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:intl/intl.dart';
+import 'globals.dart';
 
 class Calendar extends StatefulWidget  {
   const Calendar({Key? key}) : super(key: key);
@@ -27,6 +31,8 @@ class _Calendar extends State<Calendar> {
 
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+  String str1 = DateFormat("MMMMd").format(DateTime.now()) + " - " + sleepInfo[DateTime.now().month.toString()]![0] + "\n";
+  String str2 = DateFormat("jm").format(DateTime.now()) + " - " + DateFormat("jm").format(DateTime.now());
 
 
 
@@ -79,6 +85,10 @@ class _Calendar extends State<Calendar> {
                   _selectedDay = selectedDay;
                   _focusedDay = focusedDay; // update `_focusedDay` here as well
 
+                  str1 = DateFormat("MMMMd").format(selectedDay) + " - " + sleepInfo[selectedDay.month.toString()]![0] + "\n";
+                  str2 = sleepInfo[DateTime.now().month.toString()]![1] + " - " + sleepInfo[DateTime.now().month.toString()]![2];
+                  // replace DateTime.now() with selectedDay
+
                 });
               },
               onFormatChanged: (CalendarFormat _format) {
@@ -102,18 +112,18 @@ class _Calendar extends State<Calendar> {
                   width: borderWidth),
             ),
               child: RichText(
-                text: const TextSpan(
+                text: TextSpan(
                   style: TextStyle(
                     fontSize: 14.0,
                     color: Colors.white,
                   ),
                   children: <TextSpan>[
                     TextSpan(
-                        text: 'January 12 - 90 points\n',
+                        text: str1,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: calendarLightText)),
-                    TextSpan(text: '7:15 AM - 7:30 AM'),
+                    TextSpan(text: str2),
                   ],
                 ),
             ),

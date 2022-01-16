@@ -1,0 +1,1 @@
+final Map<String, List<String>> sleepInfo = {DateTime.now().month.toString():["Score", "Sleep", "Wakeup"]};
