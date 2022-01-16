@@ -12,3 +12,5 @@ const calendarText = Colors.white;
 const calendarLightText = Color(0xFF9A94CC);
 const cardBorderRadius = 10.0;
 const borderWidth = 1.5;
+
+const eventOffset = 30.0;
