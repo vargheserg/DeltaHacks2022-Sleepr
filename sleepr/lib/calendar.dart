@@ -19,20 +19,26 @@ class _Calendar extends State<Calendar> {
       margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: calendarBackground,
-        borderRadius: BorderRadius.circular(10),
+        color: cardBackground,
+        borderRadius: BorderRadius.circular(cardBorderRadius),
       ),
       child: TableCalendar(
         calendarFormat: format,
+        calendarStyle: CalendarStyle(
+          todayDecoration: BoxDecoration(
+            color: calendarLightText,
+            borderRadius: BorderRadius.circular(1000),
+          ),
+        ),
         headerStyle: const HeaderStyle(
           leftChevronIcon: Icon(
             Icons.chevron_left,
-            color: calendarChevron,
+            color: calendarLightText,
             size: 28,
           ),
           rightChevronIcon: Icon(
             Icons.chevron_right,
-            color: calendarChevron,
+            color: calendarLightText,
             size: 28,
           ),
         ),

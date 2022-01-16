@@ -76,10 +76,52 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Center(
               child: Column( 
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
+                children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Calendar()
+                    padding: const EdgeInsets.all(20.0),
+                    child: Image.asset('assets/images/Logo01.png'),
+                    ),
+                  
+                  const Calendar(),
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(10, 20, 10, 20),
+                    width: double.infinity,
+                    padding: const EdgeInsets.fromLTRB(0,20,0,20),
+                    decoration: BoxDecoration(
+                      color: cardBackground,
+                      borderRadius: BorderRadius.circular(cardBorderRadius),
+                      border: Border.all(color: calendarLightText, width: borderWidth),
+                    ),
+                    
+                    child: Center(
+                      child: RichText(
+                        text: const TextSpan(
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            color: Colors.white,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(text: 'January 12 - 90 points\n', style: TextStyle(fontWeight: FontWeight.bold, color: calendarLightText)),
+                            TextSpan(text: '7:15 AM - 7:30 AM'),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  RaisedButton(
+                    shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(cardBorderRadius),
+                    side: const BorderSide(
+                      color: calendarLightText,
+                      width: borderWidth,
+                      ),
+                    ),
+                    onPressed: () {},
+                    padding: const EdgeInsets.fromLTRB(155,10,155,10),
+                    color: cardBackground,
+                    textColor: calendarLightText,
+                    child: const Text("Settings",
+                        style: TextStyle(fontSize: 15)),
                   ),
                 ],
               ),
