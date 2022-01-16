@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sleepr/calendar.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:sleepr/settingstate.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'globals.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -55,19 +58,64 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  CalendarFormat format = CalendarFormat.month;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  bool _isloading = false;
+  @override
+  void initState() {
+    super.initState();
+    dataLoadFunction();
   }
 
+  dataLoadFunction() async {
+    setState(() {
+      _isloading = true;
+    });
+    //await Future.delayed(Duration(seconds: 3));
+
+    // initialize everything you need asynchronously here
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? a = prefs.getInt('hoursOfSleep');
+    int? b = prefs.getInt('wakeuphour');
+    int? c = prefs.getInt('wakeupminute');
+    List<String>? d = prefs.getStringList('calendar');
+    int? e = prefs.getInt('numEntries');
+    if (a != null) {
+      hoursOfSleep = a;
+    }
+    if (b != null && c != null) {
+      wakeupTime = TimeOfDay(hour: b, minute: c);
+    }
+    if (e != null) {
+      numEntries = e;
+    }
+    if (d != null) {
+      toCalendar(d);
+    }
+
+
+    setState(() {
+      _isloading = false;
+    });
+
+  }
+
+  splashScreen() {
+    return Center(child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        const Image(
+        image: NetworkImage("https://cdn.discordapp.com/attachments/432737375119081482/932063650011836427/Logo01.png"),
+        ),
+      ],
+    ),
+    );
+  }
+
+  CalendarFormat format = CalendarFormat.month;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: _isloading ? splashScreen() :
+      Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

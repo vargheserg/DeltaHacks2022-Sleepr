@@ -1,0 +1,1 @@
+const numSleepInfoFields = 4;

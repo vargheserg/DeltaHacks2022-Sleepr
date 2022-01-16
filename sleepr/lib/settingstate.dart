@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_material_pickers/flutter_material_pickers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'globals.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -13,7 +14,6 @@ class SettingsPage extends StatefulWidget {
 
 
 class _SettingsPage extends State<SettingsPage> {
-  bool isSwitched = false;
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +58,7 @@ class _SettingsPage extends State<SettingsPage> {
 
         ],
       ),
+
     );
   }
   Future<void> _selectTime(BuildContext context) async {
