@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 const topBackgroundGradient = Color(0xFF5C577C);
 const botBackgroundGradient = Color(0xFF2A2837);
+const topAlarmGradient = Color(0xFF25150D);
 const primarySwatch = Colors.grey;
 const primaryColor = Colors.black;
 const brightness = Brightness.dark;
