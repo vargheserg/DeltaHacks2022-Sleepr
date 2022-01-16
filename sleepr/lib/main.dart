@@ -55,79 +55,118 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
   CalendarFormat format = CalendarFormat.month;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: 2);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              topBackgroundGradient,
-              botBackgroundGradient,
-            ],
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Image.asset('assets/images/Logo01.png'),
-                ),
-                const Calendar(),
-                Container(
-                  margin: const EdgeInsets.fromLTRB(10, 20, 10, 20),
-                  width: double.infinity,
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  decoration: BoxDecoration(
-                    color: cardBackground,
-                    borderRadius: BorderRadius.circular(cardBorderRadius),
-                    border: Border.all(
-                        color: calendarLightText, width: borderWidth),
-                  ),
-                  child: Center(
-                    child: RichText(
-                      text: const TextSpan(
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          color: Colors.white,
-                        ),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text: 'January 12 - 90 points\n',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: calendarLightText)),
-                          TextSpan(text: '7:15 AM - 7:30 AM'),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                RaisedButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(cardBorderRadius),
-                    side: const BorderSide(
-                      color: calendarLightText,
-                      width: borderWidth,
-                    ),
-                  ),
-                  onPressed: () {},
-                  padding: const EdgeInsets.fromLTRB(155, 10, 155, 10),
-                  color: cardBackground,
-                  textColor: calendarLightText,
-                  child: const Text("Settings", style: TextStyle(fontSize: 15)),
-                ),
+      resizeToAvoidBottomInset: false,
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                topBackgroundGradient,
+                botBackgroundGradient,
               ],
             ),
+          ),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12.0, 0, 12, 12),
+                child: Center(
+                  child: Expanded(
+                      child: SizedBox(
+                    height: MediaQuery.of(context).size.height - 40,
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                              child: Image.asset('assets/images/Logo01.png',
+                                  scale: 1.1),
+                            ),
+                            const Calendar(),
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+                              width: double.infinity,
+                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
+                              decoration: BoxDecoration(
+                                color: cardBackground,
+                                borderRadius:
+                                    BorderRadius.circular(cardBorderRadius),
+                                border: Border.all(
+                                    color: calendarLightText,
+                                    width: borderWidth),
+                              ),
+                              child: Center(
+                                child: RichText(
+                                  text: const TextSpan(
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors.white,
+                                    ),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: 'January 12 - 90 points\n',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: calendarLightText)),
+                                      TextSpan(text: '7:15 AM - 7:30 AM'),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(cardBorderRadius),
+                                side: const BorderSide(
+                                  color: calendarLightText,
+                                  width: borderWidth,
+                                ),
+                              ),
+                              onPressed: () {},
+                              padding:
+                                  const EdgeInsets.fromLTRB(155, 10, 155, 10),
+                              color: cardBackground,
+                              textColor: calendarLightText,
+                              child: const Text('Settings',
+                                  style: TextStyle(fontSize: 15)),
+                            ),
+                          ],
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.fromLTRB(12.0, 0, 12, 12),
+                          child: Center(child: Text('Joe Mama')),
+                        )
+                      ],
+                    ),
+                  )),
+                ),
+              ),
+              TabPageSelector(
+                controller: _tabController,
+                color: topBackgroundGradient,
+                selectedColor: calendarLightText,
+              ),
+            ],
           ),
         ),
       ),
