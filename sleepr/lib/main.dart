@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sleepr/alarm.dart';
 import 'package:sleepr/calendar.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:sleepr/constants.dart';
@@ -206,7 +207,7 @@ class _MyHomePageState extends State<MyHomePage>
                         ),
                         const Padding(
                           padding: EdgeInsets.fromLTRB(12.0, 0, 12, 12),
-                          child: Center(child: Text('Joe Mama')),
+                          child: Alarm(),
                         )
                       ],
                     ),
