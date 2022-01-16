@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sleepr/alarm.dart';
@@ -7,6 +8,7 @@ import 'package:sleepr/constants.dart';
 import 'package:sleepr/settingstate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'globals.dart';
+import 'package:sleepr/onboarding.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -60,15 +62,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late TabController _tabController;
   CalendarFormat format = CalendarFormat.month;
   bool _isloading = false;
 
+
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 2);
+
     dataLoadFunction();
   }
   dataLoadFunction() async {
@@ -84,6 +87,7 @@ class _MyHomePageState extends State<MyHomePage>
     int? c = prefs.getInt('wakeupminute');
     List<String>? d = prefs.getStringList('calendar');
     int? e = prefs.getInt('numEntries');
+    int? f = prefs.getInt('newUser');
     if (a != null) {
       hoursOfSleep = a;
     }
@@ -96,10 +100,104 @@ class _MyHomePageState extends State<MyHomePage>
     if (d != null) {
       toCalendar(d);
     }
+    if (f == null) {
+      newUser = true;
+    }
+    // initialize tabbars
+
+    _tabController = TabController(vsync: this, length: 2);
+
     // done initializing
     setState(() {
       _isloading = false;
     });
+
+    if(newUser){
+      Navigator.push(
+        context,
+        CupertinoPageRoute(builder: (context) => const Onboarding()),
+      );
+
+    }
+
+  }
+
+  loadMainScreen() {
+
+    return SingleChildScrollView(
+      child: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              topBackgroundGradient,
+              botBackgroundGradient,
+            ],
+          ),
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12.0, 0, 12, 12),
+              child: Center(
+                child: Expanded(
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height - 40,
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: <Widget>[
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                                child: Image.asset('assets/images/Logo01.png',
+                                    scale: 1.1),
+                              ),
+                              const Calendar(),
+                              RaisedButton(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                  BorderRadius.circular(cardBorderRadius),
+                                  side: const BorderSide(
+                                    color: calendarLightText,
+                                    width: borderWidth,
+                                  ),
+                                ),
+                                onPressed: () {Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(builder: (context) => const SettingsPage()),
+                                );
+
+                                },
+                                padding:
+                                const EdgeInsets.fromLTRB(155, 10, 155, 10),
+                                color: cardBackground,
+                                textColor: calendarLightText,
+                                child: const Text('Settings',
+                                    style: TextStyle(fontSize: 15)),
+                              ),
+                            ],
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.fromLTRB(12.0, 0, 12, 12),
+                            child: Alarm(),
+                          )
+                        ],
+                      ),
+                    )),
+              ),
+            ),
+            TabPageSelector(
+              controller: _tabController,
+              color: topBackgroundGradient,
+              selectedColor: calendarLightText,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   splashScreen() {
@@ -118,80 +216,8 @@ class _MyHomePageState extends State<MyHomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: _isloading ? splashScreen() : SingleChildScrollView(
-        child: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                topBackgroundGradient,
-                botBackgroundGradient,
-              ],
-            ),
-          ),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(12.0, 0, 12, 12),
-                child: Center(
-                  child: Expanded(
-                      child: SizedBox(
-                    height: MediaQuery.of(context).size.height - 40,
-                    child: TabBarView(
-                      controller: _tabController,
-                      children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                              child: Image.asset('assets/images/Logo01.png',
-                                  scale: 1.1),
-                            ),
-                            const Calendar(),
-                            RaisedButton(
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(cardBorderRadius),
-                                side: const BorderSide(
-                                  color: calendarLightText,
-                                  width: borderWidth,
-                                ),
-                              ),
-                              onPressed: () {Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => const SettingsPage()),
-                              );
-
-                              },
-                              padding:
-                                  const EdgeInsets.fromLTRB(155, 10, 155, 10),
-                              color: cardBackground,
-                              textColor: calendarLightText,
-                              child: const Text('Settings',
-                                  style: TextStyle(fontSize: 15)),
-                            ),
-                          ],
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.fromLTRB(12.0, 0, 12, 12),
-                          child: Alarm(),
-                        )
-                      ],
-                    ),
-                  )),
-                ),
-              ),
-              TabPageSelector(
-                controller: _tabController,
-                color: topBackgroundGradient,
-                selectedColor: calendarLightText,
-              ),
-            ],
-          ),
-        ),
-      ),
+      body: _isloading ? splashScreen() : loadMainScreen(),
     );
   }
 }
+
