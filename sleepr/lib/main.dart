@@ -102,37 +102,6 @@ class _MyHomePageState extends State<MyHomePage>
                                   scale: 1.1),
                             ),
                             const Calendar(),
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(10, 10, 10, 20),
-                              width: double.infinity,
-                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
-                              decoration: BoxDecoration(
-                                color: cardBackground,
-                                borderRadius:
-                                    BorderRadius.circular(cardBorderRadius),
-                                border: Border.all(
-                                    color: calendarLightText,
-                                    width: borderWidth),
-                              ),
-                              child: Center(
-                                child: RichText(
-                                  text: const TextSpan(
-                                    style: TextStyle(
-                                      fontSize: 14.0,
-                                      color: Colors.white,
-                                    ),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                          text: 'January 12 - 90 points\n',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: calendarLightText)),
-                                      TextSpan(text: '7:15 AM - 7:30 AM'),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
                             RaisedButton(
                               shape: RoundedRectangleBorder(
                                 borderRadius:
